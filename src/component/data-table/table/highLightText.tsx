@@ -1,4 +1,4 @@
-import { styles } from "./styles";
+import { styles } from "../styles";
 
 export function HighlightText({ text, highlight }: { text: string; highlight: string }) {
   if (!highlight.trim()) {
