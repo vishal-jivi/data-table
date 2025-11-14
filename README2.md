@@ -23,3 +23,5 @@ These can be integrated easily within the context itself.
 > Took most of the reference from the **HeruUI (NectUI)** design system.
 
 > To be honest I have used AI(claud) to help me with the initial design and implementation, but I have also spent a lot of time on the styling and architecture to make sure it is as flexible as possible.
+
+> Also I have tried to keep thing in container/presentational design pattern, so that the logic is separated from the presentation. A container component handles the state and logic, while the presentational component focuses on the UI.
