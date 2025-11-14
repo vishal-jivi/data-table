@@ -7,14 +7,13 @@ export function TableHeader<T>() {
   const handleSort = (key: keyof T, sortable?: boolean) => {
     if (sortable === false) return;
 
-    setSortConfig((prev: { key: keyof T; direction: string; }) => {
-      if (prev?.key === key) {
-        return prev.direction === 'asc' 
+    const next: { key: keyof T; direction: "asc" | "desc"; } | null = !sortConfig || sortConfig.key !== key
+      ? { key, direction: 'asc' }
+      : (sortConfig.direction === 'asc'
           ? { key, direction: 'desc' }
-          : null;
-      }
-      return { key, direction: 'asc' };
-    });
+          : null);
+
+    setSortConfig(next);
   };
 
   return (
