@@ -1,6 +1,6 @@
-import { useDataTableContext } from "./dataTable.context";
+import { useDataTableContext } from "../dataTable.context";
 import { HighlightText } from "./highLightText";
-import { styles } from "./styles";
+import { styles } from "../styles";
 
 export function TableBody<T>() {
   const { columns, filteredAndSortedData, selectedRow, setSelectedRow, searchTerm } = useDataTableContext<T>();

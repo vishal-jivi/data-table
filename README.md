@@ -1,73 +1,152 @@
-# React + TypeScript + Vite
+# Data Table (Vite + React + TypeScript)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-ready, reusable DataTable component built with React 18+, TypeScript, and Context API. This component is designed to be used across multiple pages in your application and can also be published as a standalone npm package for use in other projects.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Core Functionality
+- ✅ **Type-Safe Generic Component**: Works with any data type using TypeScript generics
+- ✅ **Column Sorting**: Click column headers to sort ascending/descending/none
+- ✅ **Real-Time Search**: Filter data with instant text search
+- ✅ **Text Highlighting**: Search terms are highlighted in yellow
+- ✅ **Single Row Selection**: Click rows to select/deselect with visual feedback
+- ✅ **Responsive Design**: Horizontal scroll on mobile devices (< 768px)
+- ✅ **Empty State Handling**: Graceful display when no data matches filters
 
-## React Compiler
+### Architecture
+- 🏗️ **Context API State Management**: Clean, scalable state management without prop drilling
+- 🔄 **Reusable Across Pages**: Import once, use everywhere in your application
+- 📦 **NPM Package Ready**: Complete structure for independent deployment
+- 🎨 **CSS Modules**: Scoped styling to prevent conflicts
+- 🧩 **Composable Components**: Modular sub-components for easy customization
+- 🔒 **No `any` Types**: Fully type-safe implementation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### User Experience
+- 🎯 **Visual Feedback**: Hover effects, selected row highlighting, sort indicators
+- ⚡ **Performance Optimized**: Uses `useMemo` and `useCallback` for efficient rendering
+- 🎨 **Clean UI**: Professional styling with neutral color palette
+- 📱 **Mobile Friendly**: Touch-friendly interface with proper sizing
 
-## Expanding the ESLint configuration
+## 📋 Prerequisites
+- Node.js 18+ (LTS recommended)
+- npm (comes with Node.js)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🛠️ Install
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🏃 Run (development)
+```bash
+npm run dev
 ```
+- Open the URL shown in the terminal (usually `http://localhost:5173`)
+- The demo page shows a fully functional DataTable with sample user data
+
+## 🏗️ Build (production)
+```bash
+npm run build
+```
+
+## 📖 Usage in Your Application
+
+### Basic Usage
+
+```tsx
+import { DataTable, Column } from './components/DataTable';
+
+interface User {
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+}
+
+const userData: User[] = [
+  { name: 'Alice', email: 'alice@example.com', role: 'Admin', status: 'Active' },
+  { name: 'Bob', email: 'bob@example.com', role: 'User', status: 'Active' },
+];
+
+const userColumns: Column<User>[] = [
+  { key: 'name', label: 'Name', sortable: true },
+  { key: 'email', label: 'Email', sortable: true },
+  { key: 'role', label: 'Role', sortable: true },
+  { key: 'status', label: 'Status', sortable: true },
+];
+
+function UsersPage() {
+  const handleRowSelect = (user: User | null) => {
+    console.log('Selected user:', user);
+    // Navigate to user detail page, open modal, etc.
+  };
+
+  return (
+    <DataTable
+      data={userData}
+      columns={userColumns}
+      onRowSelect={handleRowSelect}
+      searchPlaceholder="Search users..."
+    />
+  );
+}
+```
+
+## 🎯 Component API
+
+### DataTable Props
+
+| Prop | Type | Required | Default | Description |
+|------|------|----------|---------|-------------|
+| `data` | `T[]` | ✅ | - | Array of data objects to display |
+| `columns` | `Column<T>[]` | ✅ | - | Column configuration array |
+| `onRowSelect` | `(row: T \| null) => void` | ❌ | - | Callback fired when a row is selected/deselected |
+| `searchPlaceholder` | `string` | ❌ | `"Search..."` | Placeholder text for search input |
+| `className` | `string` | ❌ | `""` | Additional CSS class for container |
+
+### Column Configuration
+
+```typescript
+interface Column<T> {
+  key: keyof T;        // Key from your data object
+  label: string;       // Display text for column header
+  sortable?: boolean;  // Enable/disable sorting (default: true)
+}
+```
+
+## 🏗️ Component Architecture
+
+### Context-Based State Management
+
+```
+DataTableProvider (Context)
+├── SearchBar Component
+├── Table
+│   ├── TableHeader Component
+│   └── TableBody Component
+│       └── HighlightText Component
+```
+
+**Benefits:**
+- No prop drilling through multiple component levels
+- Centralized state management for search, sort, and selection
+- Easy to extend with new features
+- Clean separation of concerns
+
+### State Flow
+
+1. **Search State**: Managed in Context, filters data in real-time
+2. **Sort State**: Tracks current sort column and direction
+3. **Selection State**: Tracks selected row and triggers callback
+4. **Derived State**: `filteredAndSortedData` computed with `useMemo`
+
+## 📦 Publishing as NPM Package
+
+### For Independent Use Across Projects
+
+This DataTable component is structured to be published as an npm package, allowing you to:
+
+✅ Use the same component across multiple applications
+✅ Version control your UI components independently
+✅ Share with other teams or the open-source community
+✅ Install via npm/yarn in any React project
+

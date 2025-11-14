@@ -1,5 +1,5 @@
-import { useDataTableContext } from "./dataTable.context";
-import { styles } from "./styles";
+import { useDataTableContext } from "../dataTable.context";
+import { styles } from "../styles";
 
 export function TableHeader<T>() {
   const { columns, sortConfig, setSortConfig } = useDataTableContext<T>();

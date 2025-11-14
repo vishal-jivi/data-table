@@ -1,6 +1,6 @@
 import { DataTableProvider } from "./dataTable.context";
-import { TableBody } from "./tableBody";
-import { TableHeader } from "./tableHeader";
+import { TableBody } from "./table/tableBody";
+import { TableHeader } from "./table/tableHeader";
 import { styles } from "./styles";
 import type { DataTableProps } from "./types";
 import { SearchBar } from "./searchBar";
